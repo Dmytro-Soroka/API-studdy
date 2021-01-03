@@ -18,6 +18,7 @@ console.log(client);
 // получаем объектов столько, сколько указали в per_page
 // 1
 let query = "lotus";
+
 client.photos.search({ query, per_page: 10 }).then((result) => {
   console.log(result.photos);
   const items = template(result.photos);

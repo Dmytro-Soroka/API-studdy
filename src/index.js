@@ -1,22 +1,34 @@
 import css from "./css/styles.css";
 // import libs from "./js/libs.js";
 
-import fetchObject from "./js/fetch.js";
+import asyncFetch from "./js/asyncFetch.js";
+
+//import fetchObject from "./js/fetch.js";
 // console.log(fetchObject);
 
 import x from "./js/refs.js";
 // console.log(x.form);
 
-const { form, searchBtn, gallery } = x;
+const { form, input, loadMoreBtn, gallery } = x;
 // console.log(form, searchBtn, gallery);
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  // console.log(e);
-  // console.log(e.target);
-  // console.log(e.target.elements);
-  // console.log(e.target.elements.query);
-  console.log(e.target.elements.query.value);
+
+  gallery.innerHTML = "";
+  
+  asyncFetch.resetPage();
+
   const inputValue = e.target.elements.query.value;
-  fetchObject.getFetch(inputValue, gallery);
+  
+  asyncFetch.getFetch(inputValue, gallery);
+  loadMoreBtn.classList.remove("isHiden");
+
+  inputValue.value = "";  
+});
+
+loadMoreBtn.addEventListener("click", () => {
+  console.log(`ok`);
+  asyncFetch.setPage();
+  asyncFetch.getFetch(undefined, gallery);
 });
